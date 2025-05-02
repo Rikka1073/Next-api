@@ -1,7 +1,7 @@
 export default async function Home() {
   const data = await fetch("https://api.football-data.org/v4/teams/64", {
     headers: {
-      "X-Auth-Token": "d9b12d4244034c36a3ae87539c71b59a",
+      "X-Auth-Token": process.env.NEXT_PUBLIC_FOOTBALL_API_KEY || "",
     },
   });
 
