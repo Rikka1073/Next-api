@@ -47,16 +47,20 @@ export default async function Home() {
       team: "yokohama",
     },
   };
-  const newObject = { ...object };
+  // const newObject = { ...object };
 
+  // newObject.name = "baseball";
+  // newObject.like.team = "losangeles";
+
+  const newObject = _.cloneDeep(object);
   newObject.name = "baseball";
   newObject.like.team = "losangeles";
 
   console.log(object); // { name: "soccer", like: { team: "yokohama" } }
   console.log(newObject); // { name: "baseball", like: { team: "losangeles" } }
 
-  console.log(object); // {name: "apple"}
-  console.log(newObject); // {name: "banana"}
+  // console.log(object); // {name: "apple"}
+  // console.log(newObject); // {name: "banana"}
   return (
     <div>
       <div>
