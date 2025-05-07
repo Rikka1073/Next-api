@@ -1,7 +1,6 @@
 "use client";
 import { Input } from "@/components/Input";
-import _ from "lodash";
-import { useState } from "react";
+// import _ from "lodash";
 import useSWR from "swr";
 
 export default function Home() {
@@ -10,15 +9,14 @@ export default function Home() {
   //     "X-Auth-Token": process.env.NEXT_PUBLIC_FOOTBALL_API_KEY || "",
   //   },
   // });
-
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("https://jsonplaceholder.typicode.com/users", fetcher);
+  const { data, error } = useSWR("https://jsonplaceholder.typicode.com/users/1", fetcher);
 
   if (error) {
-    console.log("error");
+    return <div>Error!</div>;
+  } else if (!data) {
+    return <div>Loading...</div>;
   }
-
-  console.log("data", data);
 
   // console.log("newData", newData);
 
@@ -76,9 +74,8 @@ export default function Home() {
   // console.log(object); // {name: "apple"}
   // console.log(newObject); // {name: "banana"}
 
-  const onclickSort = () => {
-    console.log("onclickSort");
-  };
+  const name = data.name ?? "No Name";
+  const address = data.address?.city ?? "No Address";
 
   return (
     <div>
@@ -96,7 +93,7 @@ export default function Home() {
             ))}
           </div>
         </div> */}
-      {data &&
+      {/* {data &&
         data.map((userData) => (
           <div key={userData.id} className="p-6">
             <h2 className="text-2xl font-bold mb-3">{userData.name}</h2>
@@ -105,10 +102,15 @@ export default function Home() {
               <p>{userData.phone}</p>
             </div>
           </div>
-        ))}
-      <div>
-        <Input />
-      </div>
+        ))} */}
+      {data ? (
+        <div>
+          <div>{name}</div>
+          <div>{address}</div>
+        </div>
+      ) : (
+        <div>Loading...</div>
+      )}
     </div>
   );
 }
