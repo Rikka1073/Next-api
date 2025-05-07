@@ -10,13 +10,20 @@ export default function Home() {
   //   },
   // });
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("https://jsonplaceholder.typicode.com/users/1", fetcher);
+  const { data, error } = useSWR("https://dummyjson.com/products", fetcher);
 
   if (error) {
     return <div>Error!</div>;
   } else if (!data) {
     return <div>Loading...</div>;
   }
+
+  console.log("data", data);
+  // if (error) {
+  //   console.log("error");
+  // } else if (!data) {
+  //   console.log("loading");
+  // }
 
   // console.log("newData", newData);
 
@@ -74,11 +81,28 @@ export default function Home() {
   // console.log(object); // {name: "apple"}
   // console.log(newObject); // {name: "banana"}
 
-  const name = data.name ?? "No Name";
-  const address = data.address?.city ?? "No Address";
+  // const name = data.name ?? "No Name";
+  // const address = data.address?.city ?? "No Address";
+  const onclickButton = () => {
+    console.log("onclickButton");
+  };
 
   return (
     <div>
+      {data &&
+        data.products.map((data) => {
+          return (
+            <div key={data.id}>
+              <div>{data.title}</div>
+            </div>
+          );
+        })}
+      <div className="flex gap-4">
+        <button className="bg-blue-500 text-white p-2 rounded w-2xs" onClick={onclickButton}>
+          Click
+        </button>
+        <button className="bg-blue-500 text-white p-2 rounded w-2xs">Click</button>
+      </div>
       {/* <div key={newData.id} className="bg-red-500 p-6">
           <h2 className="text-2xl font-bold mb-3">{newData.name}</h2>
           <div>
@@ -103,14 +127,14 @@ export default function Home() {
             </div>
           </div>
         ))} */}
-      {data ? (
+      {/* {data ? (
         <div>
           <div>{name}</div>
           <div>{address}</div>
         </div>
       ) : (
         <div>Loading...</div>
-      )}
+      )} */}
     </div>
   );
 }

@@ -1,6 +1,4 @@
-import { text } from "stream/consumers";
-
-export const Input = () => {
+export const Input = ({ user }) => {
   const inputValue = [
     {
       id: "1",
@@ -28,11 +26,13 @@ export const Input = () => {
     },
   ];
 
+  const onclickSelect = (id: string) => {};
+
   return (
     <div>
       <ul>
         {inputValue.map((item) => (
-          <li key={item.id} onClick={() => console.log(item.id)}>
+          <li key={item.id} onClick={() => onclickSelect(item.id)}>
             <input type={item.type} id={item.id} name={item.name} />
             <label htmlFor="">{item.text}</label>
           </li>
