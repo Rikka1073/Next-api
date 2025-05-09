@@ -10,7 +10,7 @@ export default function Home() {
   //   },
   // });
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR("https://dummyjson.com/products", fetcher);
+  const { data, error } = useSWR("https://jsonplaceholder.typicode.com/posts", fetcher);
 
   if (error) {
     return <div>Error!</div>;
@@ -20,16 +20,6 @@ export default function Home() {
 
   console.log("data", data);
 
-  const newData = data.products.sort((a, b) => {
-    if (a.price > b.price) {
-      return 1;
-    }
-    if (a.price < b.price) {
-      return -1;
-    }
-    return 0;
-  });
-  console.log("newData", newData);
   // if (error) {
   //   console.log("error");
   // } else if (!data) {
@@ -94,31 +84,50 @@ export default function Home() {
 
   // const name = data.name ?? "No Name";
   // const address = data.address?.city ?? "No Address";
-  const onclickButtonUp = () => {
-    console.log("onclickButtonUp");
-  };
+  // const onclickButtonUp = () => {
+  //   console.log("onclickButtonUp");
+  //   const newData = data.products.sort((a, b) => {
+  //     if (a.price > b.price) {
+  //       return 1;
+  //     }
+  //     if (a.price < b.price) {
+  //       return -1;
+  //     }
+  //     return 0;
+  //   });
+  //   console.log("newData", newData);
+  // };
 
-  const onclickButtonDown = () => {
-    console.log("onclickButtonDown");
-  };
+  // const onclickButtonDown = () => {
+  //   console.log("onclickButtonDown");
+  // };
+
+  const newData = data.reduce((a, b) => {
+    a.push(b.userId);
+    return a;
+  }, []);
+
+  console.log("newData", newData.index);
+
   return (
     <div>
-      {data &&
-        data.products.map((data) => {
+      {newData &&
+        newData.map((data) => {
           return (
             <div key={data.id}>
-              <div>{data.title}</div>
+              <div>{data.userId}</div>
             </div>
           );
         })}
-      <div className="flex gap-4">
+
+      {/* <div className="flex gap-4">
         <button className="bg-blue-500 text-white p-2 rounded w-2xs" onClick={onclickButtonUp}>
           UP
         </button>
         <button className="bg-blue-500 text-white p-2 rounded w-2xs" onClick={onclickButtonDown}>
           DOWN
         </button>
-      </div>
+      </div> */}
       {/* <div key={newData.id} className="bg-red-500 p-6">
           <h2 className="text-2xl font-bold mb-3">{newData.name}</h2>
           <div>
